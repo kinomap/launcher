@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KINOSOTA</title>
 <style>
 html, body {
@@ -174,7 +175,8 @@ html, body {
         <a id="card-app"
            class="card"
            tabindex="1"
-           href="https://watch.scenrix.com/tv">
+           href="https://watch.scenrix.com/tv"
+           onclick="openKinosota(event);">
 
             <img class="card-image"
                  src="img/kinosota_app.jpg"
@@ -251,9 +253,16 @@ function updateFocus(index) {
     if (index < 0) index = 0;
     if (index >= focusable.length) index = focusable.length - 1;
     currentIndex = index;
-    var el = document.getElementById(focusable[currentIndex]);
-    if (el) {
-        el.focus();
+    for (var i = 0; i < focusable.length; i++) {
+        var node = document.getElementById(focusable[i]);
+        if (node) {
+            if (i === currentIndex) {
+                node.classList.add('focused');
+                node.focus();
+            } else {
+                node.classList.remove('focused');
+            }
+        }
     }
 }
 
@@ -279,20 +288,30 @@ document.addEventListener('keydown', function(e) {
         if (currentIndex === 2) updateFocus(0);
         e.preventDefault();
     }
-    // Enter / OK
+    // Enter / OK (Enter, 13)
     else if (key === 'Enter' || key === 13) {
-        var el = document.getElementById(focusable[currentIndex]);
-        if (el) {
-            el.click();
+        if (currentIndex === 0) {
+            openKinosota(e);
+        } else if (currentIndex === 1) {
+            installAndroidTV(e);
+        } else if (currentIndex === 2) {
+            exitToRootApp();
         }
         e.preventDefault();
     }
-    // Back / Return (Samsung 10009, LG 461, Escape 27, Backspace 8)
-    else if (key === 'Escape' || key === 'Backspace' || key === 27 || key === 8 || key === 10009 || key === 461) {
+    // Back / Return (Escape 27, Backspace 8, Samsung 10009, LG 461, TV Back 196, 145)
+    else if (key === 'Escape' || key === 'Backspace' || key === 27 || key === 8 || key === 10009 || key === 461 || key === 196 || key === 145) {
         exitToRootApp();
         e.preventDefault();
     }
 });
+
+// TV Keys registration for Samsung Tizen & LG webOS
+try {
+    if (window.tizen && window.tizen.tvinputdevice) {
+        window.tizen.tvinputdevice.registerKey("Return");
+    }
+} catch (e) {}
 
 window.addEventListener('load', function() {
     setTimeout(function() {

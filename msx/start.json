@@ -1,5 +1,5 @@
 {
   "name": "KINOSOTA",
-  "version": "1.0.8",
-  "parameter": "link:http://www.kinosota.devs.surf"
+  "version": "1.1.0",
+  "parameter": "content:http://www.kinosota.devs.surf/content.json"
 }

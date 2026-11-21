@@ -1,19 +1,21 @@
 {
   "name": "KINOSOTA",
-  "version": "1.0.5",
+  "version": "1.1.0",
   "cache": false,
   "type": "pages",
   "headline": "KINOSOTA",
   "pages": [
     {
+      "action": "[settings:validate_links:0|link:http://www.kinosota.devs.surf]",
       "items": [
         {
           "id": "open-kinosota",
           "type": "button",
           "layout": "0,0,12,1",
           "focus": true,
-          "label": "ВОЙТИ В KINOSOTA",
-          "action": "link:https://watch.scenrix.com/tv"
+          "execute": true,
+          "label": "ЗАПУСК KINOSOTA...",
+          "action": "[settings:validate_links:0|link:http://www.kinosota.devs.surf]"
         }
       ]
     }
