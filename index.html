@@ -155,7 +155,7 @@ html, body {
     bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0, 210, 255, 0.9);
+    background: rgba(0, 210, 255, 0.95);
     color: #060d16;
     font-weight: bold;
     font-size: 22px;
@@ -194,7 +194,7 @@ html, body {
            class="card"
            tabindex="1"
            target="_self"
-           href="https://watch.scenrix.com/tv"
+           href="http://watch.scenrix.com/tv"
            onclick="navigateToPortal(event);">
 
             <img class="card-image"
@@ -236,7 +236,7 @@ html, body {
 <div id="toast"></div>
 
 <script>
-var KINOSOTA_APP_URL = "https://watch.scenrix.com/tv";
+var KINOSOTA_APP_URL = "http://watch.scenrix.com/tv";
 var isNavigating = false;
 
 function showToast(msg) {
@@ -248,9 +248,6 @@ function showToast(msg) {
 }
 
 function navigateToPortal(event) {
-    if (event && event.preventDefault) {
-        event.preventDefault();
-    }
     if (isNavigating) return;
     isNavigating = true;
 
@@ -275,10 +272,15 @@ function navigateToPortal(event) {
         }
     } catch(err) {}
 
-    window.location.assign(KINOSOTA_APP_URL);
-    setTimeout(function() {
-        window.location.href = KINOSOTA_APP_URL;
-    }, 150);
+    try {
+        if (window.top && window.top !== window) {
+            window.top.location.href = KINOSOTA_APP_URL;
+            return;
+        }
+    } catch(err) {}
+
+    try { window.location.assign(KINOSOTA_APP_URL); } catch(e) {}
+    try { window.location.href = KINOSOTA_APP_URL; } catch(e) {}
 }
 
 function installAndroidTV(event) {
@@ -396,10 +398,11 @@ function handleTVKey(e) {
             navigateToPortal(e);
         } else if (currentIndex === 1) {
             installAndroidTV(e);
+            if (e.preventDefault) e.preventDefault();
         } else if (currentIndex === 2) {
             exitToRootApp(e);
+            if (e.preventDefault) e.preventDefault();
         }
-        if (e.preventDefault) e.preventDefault();
     } else if (isBackKey(e)) {
         exitToRootApp(e);
         if (e.preventDefault) e.preventDefault();
