@@ -1,6 +1,6 @@
 {
   "name": "KINOSOTA",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "cache": false,
   "type": "pages",
   "headline": "KINOSOTA",
@@ -12,8 +12,8 @@
           "type": "button",
           "layout": "0,0,12,1",
           "focus": true,
-          "label": "OPEN KINOSOTA",
-          "action": "link:https://www.kinosota.devs.surf"
+          "label": "ВОЙТИ В KINOSOTA",
+          "action": "link:https://watch.scenrix.com/tv"
         }
       ]
     }
