@@ -40,13 +40,18 @@ html, body {
     font-size: 22px;
     font-weight: bold;
     text-decoration: none;
+    border-radius: 8px;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .back:hover,
-.back:focus {
+.back:focus,
+.back.focused {
     background: #1c385e;
     border-color: #00d2ff;
     color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+    transform: scale(1.05);
     outline: none;
 }
 
@@ -94,6 +99,8 @@ html, body {
     text-decoration: none;
     color: #e2e8f0;
     outline: none;
+    border-radius: 12px;
+    transition: transform 0.15s ease;
 }
 
 .card-image {
@@ -101,12 +108,22 @@ html, body {
     width: 220px;
     height: 276px;
     border: 3px solid #1e3a5f;
+    border-radius: 12px;
     background: #060d16;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover,
+.card:focus,
+.card.focused {
+    transform: scale(1.08);
 }
 
 .card:hover .card-image,
-.card:focus .card-image {
+.card:focus .card-image,
+.card.focused .card-image {
     border-color: #00d2ff;
+    box-shadow: 0 0 28px rgba(0, 210, 255, 0.7);
 }
 
 .card-title {
@@ -136,7 +153,9 @@ html, body {
 
 <div class="page">
 
-    <a class="back"
+    <a id="btn-back"
+       class="back"
+       tabindex="3"
        href="#"
        onclick="exitToRootApp(); return false;">
         ← НАЗАД В MSX
@@ -152,7 +171,9 @@ html, body {
 
     <div class="cards">
 
-        <a class="card"
+        <a id="card-app"
+           class="card"
+           tabindex="1"
            href="https://watch.scenrix.com/tv">
 
             <img class="card-image"
@@ -163,11 +184,13 @@ html, body {
 
             <div class="card-title">ВОЙТИ В KINOSOTA</div>
             <div class="card-text">
-                Фильмы и сериалы на большим экране
+                Фильмы и сериалы на большом экране
             </div>
         </a>
 
-        <a class="card"
+        <a id="card-android"
+           class="card"
+           tabindex="2"
            href="#"
            onclick="installAndroidTV(event); return false;">
 
@@ -207,8 +230,75 @@ function installAndroidTV(event) {
 }
 
 function exitToRootApp() {
-    window.history.go(1 - window.history.length);
+    try {
+        if (window.TVXInteractionPlugin && window.TVXInteractionPlugin.executeAction) {
+            window.TVXInteractionPlugin.executeAction('back');
+            return;
+        }
+    } catch (e) {}
+    try {
+        window.history.go(1 - window.history.length);
+    } catch (e) {
+        window.history.back();
+    }
 }
+
+// ── Smart TV Remote D-Pad Navigation ──
+var focusable = ['card-app', 'card-android', 'btn-back'];
+var currentIndex = 0;
+
+function updateFocus(index) {
+    if (index < 0) index = 0;
+    if (index >= focusable.length) index = focusable.length - 1;
+    currentIndex = index;
+    var el = document.getElementById(focusable[currentIndex]);
+    if (el) {
+        el.focus();
+    }
+}
+
+document.addEventListener('keydown', function(e) {
+    var key = e.key || e.keyCode;
+    // Arrow Left
+    if (key === 'ArrowLeft' || key === 37) {
+        if (currentIndex === 1) updateFocus(0);
+        e.preventDefault();
+    }
+    // Arrow Right
+    else if (key === 'ArrowRight' || key === 39) {
+        if (currentIndex === 0) updateFocus(1);
+        e.preventDefault();
+    }
+    // Arrow Up
+    else if (key === 'ArrowUp' || key === 38) {
+        updateFocus(2);
+        e.preventDefault();
+    }
+    // Arrow Down
+    else if (key === 'ArrowDown' || key === 40) {
+        if (currentIndex === 2) updateFocus(0);
+        e.preventDefault();
+    }
+    // Enter / OK
+    else if (key === 'Enter' || key === 13) {
+        var el = document.getElementById(focusable[currentIndex]);
+        if (el) {
+            el.click();
+        }
+        e.preventDefault();
+    }
+    // Back / Return (Samsung 10009, LG 461, Escape 27, Backspace 8)
+    else if (key === 'Escape' || key === 'Backspace' || key === 27 || key === 8 || key === 10009 || key === 461) {
+        exitToRootApp();
+        e.preventDefault();
+    }
+});
+
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        updateFocus(0);
+    }, 100);
+});
 </script>
 
 </body>
