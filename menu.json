@@ -1,11 +1,11 @@
 {
   "name": "KINOSOTA",
-  "version": "1.1.0",
+  "version": "1.1.2",
   "cache": false,
   "headline": "KINOSOTA",
   "menu": [
     {
-      "label": "ЗАПУСК KINOSOTA",
+      "label": "ВОЙТИ В KINOSOTA LAUNCHER",
       "data": "http://www.kinosota.devs.surf/content.json"
     }
   ]

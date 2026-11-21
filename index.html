@@ -43,6 +43,7 @@ html, body {
     text-decoration: none;
     border-radius: 8px;
     transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+    cursor: pointer;
 }
 
 .back:hover,
@@ -102,6 +103,7 @@ html, body {
     outline: none;
     border-radius: 12px;
     transition: transform 0.15s ease;
+    cursor: pointer;
 }
 
 .card-image {
@@ -147,6 +149,22 @@ html, body {
     letter-spacing: 4px;
     color: #64748b;
 }
+
+#toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 210, 255, 0.9);
+    color: #060d16;
+    font-weight: bold;
+    font-size: 22px;
+    padding: 12px 28px;
+    border-radius: 30px;
+    box-shadow: 0 0 30px rgba(0, 210, 255, 0.8);
+    display: none;
+    z-index: 9999;
+}
 </style>
 </head>
 
@@ -158,7 +176,7 @@ html, body {
        class="back"
        tabindex="3"
        href="#"
-       onclick="exitToRootApp(); return false;">
+       onclick="exitToRootApp(event); return false;">
         ← НАЗАД В MSX
     </a>
 
@@ -175,8 +193,9 @@ html, body {
         <a id="card-app"
            class="card"
            tabindex="1"
+           target="_self"
            href="https://watch.scenrix.com/tv"
-           onclick="openKinosota(event);">
+           onclick="navigateToPortal(event);">
 
             <img class="card-image"
                  src="img/kinosota_app.jpg"
@@ -214,38 +233,85 @@ html, body {
 
 </div>
 
+<div id="toast"></div>
+
 <script>
 var KINOSOTA_APP_URL = "https://watch.scenrix.com/tv";
+var isNavigating = false;
 
-function openKinosota(event) {
+function showToast(msg) {
+    var t = document.getElementById('toast');
+    if (t) {
+        t.innerText = msg;
+        t.style.display = 'block';
+    }
+}
+
+function navigateToPortal(event) {
     if (event && event.preventDefault) {
         event.preventDefault();
     }
-    window.location.href = KINOSOTA_APP_URL;
+    if (isNavigating) return;
+    isNavigating = true;
+
+    showToast('Запуск портала KINOSOTA...');
+
+    var card = document.getElementById('card-app');
+    if (card) {
+        var title = card.querySelector('.card-title');
+        if (title) title.innerText = 'ЗАГРУЗКА...';
+        card.classList.add('focused');
+        var img = card.querySelector('.card-image');
+        if (img) {
+            img.style.borderColor = '#00ff88';
+            img.style.boxShadow = '0 0 35px rgba(0, 255, 136, 0.9)';
+        }
+    }
+
+    try {
+        if (window.TVXInteractionPlugin && window.TVXInteractionPlugin.executeAction) {
+            window.TVXInteractionPlugin.executeAction('link:' + KINOSOTA_APP_URL);
+            return;
+        }
+    } catch(err) {}
+
+    window.location.assign(KINOSOTA_APP_URL);
+    setTimeout(function() {
+        window.location.href = KINOSOTA_APP_URL;
+    }, 150);
 }
 
 function installAndroidTV(event) {
     if (event && event.preventDefault) {
         event.preventDefault();
     }
+    showToast('Приложение для Android TV скоро будет доступно');
+    setTimeout(function() {
+        var t = document.getElementById('toast');
+        if (t) t.style.display = 'none';
+    }, 2500);
     return false;
 }
 
-function exitToRootApp() {
+function exitToRootApp(event) {
+    if (event && event.preventDefault) {
+        event.preventDefault();
+    }
     try {
         if (window.TVXInteractionPlugin && window.TVXInteractionPlugin.executeAction) {
             window.TVXInteractionPlugin.executeAction('back');
             return;
         }
     } catch (e) {}
-    try {
-        window.history.go(1 - window.history.length);
-    } catch (e) {
+
+    if (window.history.length > 1) {
         window.history.back();
+    } else {
+        window.location.href = "https://msx.benzac.de/";
     }
 }
 
-// ── Smart TV Remote D-Pad Navigation ──
+// ── Smart TV Remote D-Pad & Key Detection ──
 var focusable = ['card-app', 'card-android', 'btn-back'];
 var currentIndex = 0;
 
@@ -258,7 +324,7 @@ function updateFocus(index) {
         if (node) {
             if (i === currentIndex) {
                 node.classList.add('focused');
-                node.focus();
+                try { node.focus(); } catch(e) {}
             } else {
                 node.classList.remove('focused');
             }
@@ -266,57 +332,94 @@ function updateFocus(index) {
     }
 }
 
-document.addEventListener('keydown', function(e) {
-    var key = e.key || e.keyCode;
-    // Arrow Left
-    if (key === 'ArrowLeft' || key === 37) {
+function getCode(e) {
+    return e.keyCode || e.which || 0;
+}
+
+function getKey(e) {
+    var k = e.key;
+    if (!k || k === 'Unidentified') return '';
+    return String(k).toLowerCase();
+}
+
+function isEnterKey(e) {
+    var c = getCode(e);
+    var k = getKey(e);
+    return c === 13 || c === 29443 || c === 195 || c === 23 || c === 66 || c === 32 || k === 'enter' || k === 'select' || k === 'accept';
+}
+
+function isBackKey(e) {
+    var c = getCode(e);
+    var k = getKey(e);
+    return c === 27 || c === 8 || c === 10009 || c === 461 || c === 196 || c === 145 || k === 'escape' || k === 'backspace' || k === 'goback' || k === 'back';
+}
+
+function isLeftKey(e) {
+    var c = getCode(e);
+    var k = getKey(e);
+    return c === 37 || c === 214 || c === 205 || k === 'arrowleft' || k === 'left';
+}
+
+function isRightKey(e) {
+    var c = getCode(e);
+    var k = getKey(e);
+    return c === 39 || c === 213 || c === 206 || k === 'arrowright' || k === 'right';
+}
+
+function isUpKey(e) {
+    var c = getCode(e);
+    var k = getKey(e);
+    return c === 38 || c === 211 || c === 203 || k === 'arrowup' || k === 'up';
+}
+
+function isDownKey(e) {
+    var c = getCode(e);
+    var k = getKey(e);
+    return c === 40 || c === 212 || c === 204 || k === 'arrowdown' || k === 'down';
+}
+
+function handleTVKey(e) {
+    if (isLeftKey(e)) {
         if (currentIndex === 1) updateFocus(0);
-        e.preventDefault();
-    }
-    // Arrow Right
-    else if (key === 'ArrowRight' || key === 39) {
+        if (e.preventDefault) e.preventDefault();
+    } else if (isRightKey(e)) {
         if (currentIndex === 0) updateFocus(1);
-        e.preventDefault();
-    }
-    // Arrow Up
-    else if (key === 'ArrowUp' || key === 38) {
+        if (e.preventDefault) e.preventDefault();
+    } else if (isUpKey(e)) {
         updateFocus(2);
-        e.preventDefault();
-    }
-    // Arrow Down
-    else if (key === 'ArrowDown' || key === 40) {
+        if (e.preventDefault) e.preventDefault();
+    } else if (isDownKey(e)) {
         if (currentIndex === 2) updateFocus(0);
-        e.preventDefault();
-    }
-    // Enter / OK (Enter, 13)
-    else if (key === 'Enter' || key === 13) {
+        if (e.preventDefault) e.preventDefault();
+    } else if (isEnterKey(e)) {
         if (currentIndex === 0) {
-            openKinosota(e);
+            navigateToPortal(e);
         } else if (currentIndex === 1) {
             installAndroidTV(e);
         } else if (currentIndex === 2) {
-            exitToRootApp();
+            exitToRootApp(e);
         }
-        e.preventDefault();
+        if (e.preventDefault) e.preventDefault();
+    } else if (isBackKey(e)) {
+        exitToRootApp(e);
+        if (e.preventDefault) e.preventDefault();
     }
-    // Back / Return (Escape 27, Backspace 8, Samsung 10009, LG 461, TV Back 196, 145)
-    else if (key === 'Escape' || key === 'Backspace' || key === 27 || key === 8 || key === 10009 || key === 461 || key === 196 || key === 145) {
-        exitToRootApp();
-        e.preventDefault();
-    }
-});
+}
 
-// TV Keys registration for Samsung Tizen & LG webOS
+document.addEventListener('keydown', handleTVKey);
+
+// Samsung Tizen TV remote key registration
 try {
     if (window.tizen && window.tizen.tvinputdevice) {
         window.tizen.tvinputdevice.registerKey("Return");
+        window.tizen.tvinputdevice.registerKey("Exit");
     }
 } catch (e) {}
 
 window.addEventListener('load', function() {
     setTimeout(function() {
         updateFocus(0);
-    }, 100);
+    }, 80);
 });
 </script>
 
