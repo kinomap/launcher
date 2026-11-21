@@ -353,7 +353,7 @@ function isEnterKey(e) {
 function isBackKey(e) {
     var c = getCode(e);
     var k = getKey(e);
-    return c === 27 || c === 8 || c === 10009 || c === 461 || c === 196 || c === 145 || k === 'escape' || k === 'backspace' || k === 'goback' || k === 'back';
+    return c === 27 || c === 8 || c === 10009 || c === 461 || c === 196 || c === 145 || c === 4 || k === 'escape' || k === 'backspace' || k === 'goback' || k === 'back';
 }
 
 function isLeftKey(e) {
@@ -423,6 +423,23 @@ window.addEventListener('load', function() {
     setTimeout(function() {
         updateFocus(0);
     }, 80);
+});
+
+window.addEventListener('pageshow', function() {
+    isNavigating = false;
+    var t = document.getElementById('toast');
+    if (t) t.style.display = 'none';
+    var card = document.getElementById('card-app');
+    if (card) {
+        var title = card.querySelector('.card-title');
+        if (title) title.innerText = 'ВОЙТИ В KINOSOTA';
+        var img = card.querySelector('.card-image');
+        if (img) {
+            img.style.borderColor = '';
+            img.style.boxShadow = '';
+        }
+    }
+    updateFocus(0);
 });
 </script>
 
