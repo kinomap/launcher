@@ -248,26 +248,9 @@
 
         </div>
 
-/** Detect browser capability automatically without asking the user: 'legacy' or 'modern'. */
-function detectTvEpoch() {
-    var ua = (navigator.userAgent || '').toLowerCase();
-    var appVer = (navigator.appVersion || '').toLowerCase();
-    var isWebOs = ua.indexOf('webos') !== -1 || ua.indexOf('web0s') !== -1;
-    var isTizen = ua.indexOf('tizen') !== -1;
-    var isTvUa = isWebOs || isTizen || ua.indexOf('maple') !== -1 || appVer.indexOf('maple') !== -1 ||
-                 ua.indexOf('smarthub') !== -1 || ua.indexOf('netcast') !== -1 ||
-                 ua.indexOf('smarttv') !== -1 || ua.indexOf('smart-tv') !== -1 || ua.indexOf('hbbtv') !== -1 ||
-                 ua.indexOf('aft') !== -1 || ua.indexOf('bravia') !== -1 || ua.indexOf('philips') !== -1 ||
-                 ua.indexOf('android tv') !== -1 || ua.indexOf('googletv') !== -1 ||
-                 typeof window.curWidget !== 'undefined' || typeof window.Common !== 'undefined';
+        <div class="footer">БОЛЬШЕ ЧЕМ ПРОСТО КИНО</div>
 
-    // 1. Samsung Orsay (2010–2014): Maple WebKit 537, SmartHub, curWidget/Common, or legacy SmartTV without Tizen/webOS.
-    var isSamsungOrsay = ua.indexOf('maple') !== -1 || appVer.indexOf('maple') !== -1 ||
-                         ua.indexOf('smarthub') !== -1 ||
-                         typeof window.curWidget !== 'undefined' || typeof window.Common !== 'undefined' ||
-                         (ua.indexOf('smarttv') !== -1 && !isTizen && !isWebOs) ||
-                         (ua.indexOf('samsung') !== -1 && !isTizen &&
-                          (ua.indexOf('2011') !== -1 || ua.indexOf('2012') !== -1 || ua.indexOf('2013') !== -1 || ua.indexOf('2014') !== -1 || ua.indexOf('2015') !== -1));
+    </div>
 
     <div id="toast"></div>
 
@@ -286,21 +269,27 @@ function detectTvEpoch() {
 
         function chromeMajorVersion(ua) {
             var m = ua.match(/(?:chrome|crios|chromium)\/(\d+)/);
+            if (!m) m = ua.match(/\b(\d{2,3})\.\d+\.\d+\.\d+\/[\d.]+\s+tv\b/);
             return m && m[1] ? parseInt(m[1], 10) : 0;
         }
 
         /** Detect browser capability automatically without asking the user: 'legacy' or 'modern'. */
         function detectTvEpoch() {
             var ua = (navigator.userAgent || '').toLowerCase();
+            var appVer = (navigator.appVersion || '').toLowerCase();
             var isWebOs = ua.indexOf('webos') !== -1 || ua.indexOf('web0s') !== -1;
             var isTizen = ua.indexOf('tizen') !== -1;
-            var isTvUa = isWebOs || isTizen || ua.indexOf('maple') !== -1 || ua.indexOf('netcast') !== -1 ||
+            var isTvUa = isWebOs || isTizen || ua.indexOf('maple') !== -1 || appVer.indexOf('maple') !== -1 ||
+                ua.indexOf('smarthub') !== -1 || ua.indexOf('netcast') !== -1 ||
                 ua.indexOf('smarttv') !== -1 || ua.indexOf('smart-tv') !== -1 || ua.indexOf('hbbtv') !== -1 ||
                 ua.indexOf('aft') !== -1 || ua.indexOf('bravia') !== -1 || ua.indexOf('philips') !== -1 ||
-                ua.indexOf('android tv') !== -1 || ua.indexOf('googletv') !== -1;
+                ua.indexOf('android tv') !== -1 || ua.indexOf('googletv') !== -1 ||
+                typeof window.curWidget !== 'undefined' || typeof window.Common !== 'undefined';
 
-            // 1. Samsung Orsay (2010–2014): Maple WebKit 537 or legacy SmartTV without Tizen/webOS.
-            var isSamsungOrsay = ua.indexOf('maple') !== -1 ||
+            // 1. Samsung Orsay (2010–2014): Maple WebKit 537, SmartHub, curWidget/Common, or legacy SmartTV without Tizen/webOS.
+            var isSamsungOrsay = ua.indexOf('maple') !== -1 || appVer.indexOf('maple') !== -1 ||
+                ua.indexOf('smarthub') !== -1 ||
+                typeof window.curWidget !== 'undefined' || typeof window.Common !== 'undefined' ||
                 (ua.indexOf('smarttv') !== -1 && !isTizen && !isWebOs) ||
                 (ua.indexOf('samsung') !== -1 && !isTizen &&
                     (ua.indexOf('2011') !== -1 || ua.indexOf('2012') !== -1 || ua.indexOf('2013') !== -1 || ua.indexOf('2014') !== -1 || ua.indexOf('2015') !== -1));
@@ -336,8 +325,12 @@ function detectTvEpoch() {
             return detectTvEpoch() === 'legacy' ? KINOSOTA_LITE_URL : KINOSOTA_NEXTGEN_URL;
         }
 
-    // Stay inside the current MSX window/webview instead of overwriting window.top,
-    // so TV platform bridges (Orsay $MANAGER_WIDGET / Tizen $WEBAPIS) stay intact.
+        function renderTvRoute() {
+            KINOSOTA_APP_URL = resolvePortalUrl();
+            var card = document.getElementById('card-app');
+            if (card) card.setAttribute('href', KINOSOTA_APP_URL);
+        }
+
         function showToast(msg) {
             var t = document.getElementById('toast');
             if (t) {
@@ -373,13 +366,8 @@ function detectTvEpoch() {
                 }
             } catch (err) { }
 
-            try {
-                if (window.top && window.top !== window) {
-                    window.top.location.href = KINOSOTA_APP_URL;
-                    return;
-                }
-            } catch (err) { }
-
+            // Stay inside the current MSX window/webview instead of overwriting window.top,
+            // so TV platform bridges (Orsay $MANAGER_WIDGET / Tizen $WEBAPIS) stay intact.
             try { window.location.assign(KINOSOTA_APP_URL); } catch (e) { }
             try { window.location.href = KINOSOTA_APP_URL; } catch (e) { }
         }
