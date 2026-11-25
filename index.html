@@ -1,519 +1,551 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KINOSOTA</title>
-<style>
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    background: #0b1522;
-    background-image: url('img/bg_soti.jpg');
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-size: cover;
-    color: #e2e8f0;
-    font-family: Arial, Helvetica, sans-serif;
-    overflow: hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINOSOTA</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: #0b1522;
+            background-image: url('img/bg_soti.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            color: #e2e8f0;
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+        }
 
-.page {
-    position: relative;
-    width: 960px;
-    margin: 0 auto;
-    padding: 24px 20px 0 20px;
-    box-sizing: border-box;
-    text-align: left;
-}
+        .page {
+            position: relative;
+            width: 960px;
+            margin: 0 auto;
+            padding: 24px 20px 0 20px;
+            box-sizing: border-box;
+            text-align: left;
+        }
 
-.back {
-    position: absolute;
-    top: 24px;
-    right: 20px;
-    display: inline-block;
-    padding: 10px 22px;
-    border: 2px solid #1e3a5f;
-    background: #112236;
-    color: #e2e8f0;
-    font-size: 22px;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 8px;
-    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-    cursor: pointer;
-}
+        .back {
+            position: absolute;
+            top: 24px;
+            right: 20px;
+            display: inline-block;
+            padding: 10px 22px;
+            border: 2px solid #1e3a5f;
+            background: #112236;
+            color: #e2e8f0;
+            font-size: 22px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            cursor: pointer;
+        }
 
-.back:hover,
-.back:focus,
-.back.focused {
-    background: #1c385e;
-    border-color: #00d2ff;
-    color: #ffffff;
-    box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
-    transform: scale(1.05);
-    outline: none;
-}
+        .back:hover,
+        .back:focus,
+        .back.focused {
+            background: #1c385e;
+            border-color: #00d2ff;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+            transform: scale(1.05);
+            outline: none;
+        }
 
-.brand {
-    font-size: 42px;
-    font-weight: bold;
-    letter-spacing: 4px;
-    color: #e2e8f0;
-}
+        .brand {
+            font-size: 42px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            color: #e2e8f0;
+        }
 
-.tagline {
-    margin-top: 4px;
-    font-size: 20px;
-    color: #94a3b8;
-}
+        .tagline {
+            margin-top: 4px;
+            font-size: 20px;
+            color: #94a3b8;
+        }
 
-.intro {
-    margin-top: 20px;
-    text-align: center;
-}
+        .intro {
+            margin-top: 20px;
+            text-align: center;
+        }
 
-.intro-title {
-    font-size: 28px;
-    font-weight: bold;
-    color: #e2e8f0;
-}
+        .intro-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #e2e8f0;
+        }
 
-.intro-text {
-    margin-top: 4px;
-    font-size: 20px;
-    color: #94a3b8;
-}
+        .intro-text {
+            margin-top: 4px;
+            font-size: 20px;
+            color: #94a3b8;
+        }
 
-.cards {
-    width: 100%;
-    margin: 24px auto 0 auto;
-    text-align: center;
-}
+        .cards {
+            width: 100%;
+            margin: 24px auto 0 auto;
+            text-align: center;
+        }
 
-.card {
-    display: inline-block;
-    vertical-align: top;
-    width: 220px;
-    margin: 0 35px;
-    text-decoration: none;
-    color: #e2e8f0;
-    outline: none;
-    border-radius: 12px;
-    transition: transform 0.15s ease;
-    cursor: pointer;
-}
+        .card {
+            display: inline-block;
+            vertical-align: top;
+            width: 220px;
+            margin: 0 35px;
+            text-decoration: none;
+            color: #e2e8f0;
+            outline: none;
+            border-radius: 12px;
+            transition: transform 0.15s ease;
+            cursor: pointer;
+        }
 
-.card-image {
-    display: block;
-    width: 220px;
-    height: 276px;
-    border: 3px solid #1e3a5f;
-    border-radius: 12px;
-    background: #060d16;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
-}
+        .card-image {
+            display: block;
+            width: 220px;
+            height: 276px;
+            border: 3px solid #1e3a5f;
+            border-radius: 12px;
+            background: #060d16;
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
 
-.card:hover,
-.card:focus,
-.card.focused {
-    transform: scale(1.08);
-}
+        .card:hover,
+        .card:focus,
+        .card.focused {
+            transform: scale(1.08);
+        }
 
-.card:hover .card-image,
-.card:focus .card-image,
-.card.focused .card-image {
-    border-color: #00d2ff;
-    box-shadow: 0 0 28px rgba(0, 210, 255, 0.7);
-}
+        .card:hover .card-image,
+        .card:focus .card-image,
+        .card.focused .card-image {
+            border-color: #00d2ff;
+            box-shadow: 0 0 28px rgba(0, 210, 255, 0.7);
+        }
 
-.card-title {
-    margin-top: 14px;
-    font-size: 24px;
-    font-weight: bold;
-    color: #e2e8f0;
-}
+        .card-title {
+            margin-top: 14px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #e2e8f0;
+        }
 
-.card-text {
-    margin-top: 4px;
-    font-size: 20px;
-    color: #94a3b8;
-}
+        .card-text {
+            margin-top: 4px;
+            font-size: 20px;
+            color: #94a3b8;
+        }
 
-.footer {
-    margin-top: 28px;
-    text-align: center;
-    font-size: 19px;
-    letter-spacing: 4px;
-    color: #64748b;
-}
+        .footer {
+            margin-top: 28px;
+            text-align: center;
+            font-size: 19px;
+            letter-spacing: 4px;
+            color: #64748b;
+        }
 
-#toast {
-    position: fixed;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0, 210, 255, 0.95);
-    color: #060d16;
-    font-weight: bold;
-    font-size: 22px;
-    padding: 12px 28px;
-    border-radius: 30px;
-    box-shadow: 0 0 30px rgba(0, 210, 255, 0.8);
-    display: none;
-    z-index: 9999;
-}
-</style>
+        .mode-row {
+            margin-top: 22px;
+            text-align: center;
+        }
+
+        .mode {
+            display: inline-block;
+            padding: 8px 22px;
+            border: 2px solid #1e3a5f;
+            background: #0d1b2b;
+            color: #94a3b8;
+            font-size: 19px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            cursor: pointer;
+        }
+
+        .mode:hover,
+        .mode:focus,
+        .mode.focused {
+            background: #1c385e;
+            border-color: #00d2ff;
+            color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 210, 255, 0.6);
+            transform: scale(1.05);
+            outline: none;
+        }
+
+        .mode-hint {
+            margin-top: 6px;
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 210, 255, 0.95);
+            color: #060d16;
+            font-weight: bold;
+            font-size: 22px;
+            padding: 12px 28px;
+            border-radius: 30px;
+            box-shadow: 0 0 30px rgba(0, 210, 255, 0.8);
+            display: none;
+            z-index: 9999;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="page">
+    <div class="page">
 
-    <a id="btn-back"
-       class="back"
-       tabindex="3"
-       href="#"
-       onclick="exitToRootApp(event); return false;">
-        ← НАЗАД В MSX
-    </a>
-
-    <div class="brand">KINOSOTA</div>
-    <div class="tagline">Ваше кино. Ваша коллекция.</div>
-
-    <div class="intro">
-        <div class="intro-title">Добро пожаловать</div>
-        <div class="intro-text">Выберите способ просмотра</div>
-    </div>
-
-    <div class="cards">
-
-        <a id="card-app"
-           class="card"
-           tabindex="1"
-           target="_self"
-           href="http://watch.scenrix.com/tv"
-           onclick="navigateToPortal(event);">
-
-            <img class="card-image"
-                 src="img/kinosota_app.jpg"
-                 width="220"
-                 height="276"
-                 alt="KINOSOTA">
-
-            <div class="card-title">ВОЙТИ В KINOSOTA</div>
-            <div class="card-text">
-                Фильмы и сериалы на большом экране
-            </div>
+        <a id="btn-back" class="back" tabindex="3" href="#" onclick="exitToRootApp(event); return false;">
+            ← НАЗАД В MSX
         </a>
 
-        <a id="card-android"
-           class="card"
-           tabindex="2"
-           href="#"
-           onclick="installAndroidTV(event); return false;">
+        <div class="brand">KINOSOTA</div>
+        <div class="tagline">Ваше кино. Ваша коллекция.</div>
 
-            <img class="card-image"
-                 src="img/kinosota_android_tv.jpg"
-                 width="220"
-                 height="276"
-                 alt="KINOSOTA Android TV">
+        <div class="intro">
+            <div class="intro-title">Добро пожаловать</div>
+            <div class="intro-text">Выберите способ просмотра</div>
+        </div>
 
-            <div class="card-title">УСТАНОВИТЬ НА ANDROID TV</div>
-            <div class="card-text">
-                KINOSOTA всегда с вами
-            </div>
-        </a>
+        <div class="cards">
 
-    </div>
+            <a id="card-app" class="card" tabindex="1" target="_self" href="http://watch.scenrix.com/tv"
+                onclick="navigateToPortal(event);">
 
-    <div class="footer">БОЛЬШЕ ЧЕМ ПРОСТО КИНО</div>
+                <img class="card-image" src="img/kinosota_app.jpg" width="220" height="276" alt="KINOSOTA">
 
-</div>
+                <div class="card-title">ВОЙТИ В KINOSOTA</div>
+                <div class="card-text">
+                    Фильмы и сериалы на большом экране
+                </div>
+            </a>
 
-<div id="toast"></div>
+            <a id="card-android" class="card" tabindex="2" href="#" onclick="installAndroidTV(event); return false;">
 
-<script>
-// ── Automatic Smart TV Routing: /tv (modern LG/Tizen/Android) vs /tv/lite (Orsay & older TVs) ──
-var KINOSOTA_NEXTGEN_URL = "http://watch.scenrix.com/tv";
-var KINOSOTA_LITE_URL = "http://watch.scenrix.com/tv/lite";
-var KINOSOTA_APP_URL = KINOSOTA_NEXTGEN_URL;
-var TV_MODE_KEY = 'kinosota:tv-engine';
-var isNavigating = false;
+                <img class="card-image" src="img/kinosota_android_tv.jpg" width="220" height="276"
+                    alt="KINOSOTA Android TV">
 
-function tvSearchParam(name) {
-    var m = (window.location.search || '').match(new RegExp('[?&]' + name + '=([^&]+)'));
-    return m && m[1] ? decodeURIComponent(m[1]) : '';
-}
+                <div class="card-title">УСТАНОВИТЬ НА ANDROID TV</div>
+                <div class="card-text">
+                    KINOSOTA всегда с вами
+                </div>
+            </a>
 
-function chromeMajorVersion(ua) {
-    var m = ua.match(/(?:chrome|crios|chromium)\/(\d+)/);
-    if (!m) m = ua.match(/\b(\d{2,3})\.\d+\.\d+\.\d+\/[\d.]+\s+tv\b/);
-    return m && m[1] ? parseInt(m[1], 10) : 0;
-}
+        </div>
 
 /** Detect browser capability automatically without asking the user: 'legacy' or 'modern'. */
 function detectTvEpoch() {
     var ua = (navigator.userAgent || '').toLowerCase();
+    var appVer = (navigator.appVersion || '').toLowerCase();
     var isWebOs = ua.indexOf('webos') !== -1 || ua.indexOf('web0s') !== -1;
     var isTizen = ua.indexOf('tizen') !== -1;
-    var isTvUa = isWebOs || isTizen || ua.indexOf('maple') !== -1 || ua.indexOf('netcast') !== -1 ||
+    var isTvUa = isWebOs || isTizen || ua.indexOf('maple') !== -1 || appVer.indexOf('maple') !== -1 ||
+                 ua.indexOf('smarthub') !== -1 || ua.indexOf('netcast') !== -1 ||
                  ua.indexOf('smarttv') !== -1 || ua.indexOf('smart-tv') !== -1 || ua.indexOf('hbbtv') !== -1 ||
                  ua.indexOf('aft') !== -1 || ua.indexOf('bravia') !== -1 || ua.indexOf('philips') !== -1 ||
-                 ua.indexOf('android tv') !== -1 || ua.indexOf('googletv') !== -1;
+                 ua.indexOf('android tv') !== -1 || ua.indexOf('googletv') !== -1 ||
+                 typeof window.curWidget !== 'undefined' || typeof window.Common !== 'undefined';
 
-    // 1. Samsung Orsay (2010–2014): Maple WebKit 537 or legacy SmartTV without Tizen/webOS.
-    var isSamsungOrsay = ua.indexOf('maple') !== -1 ||
+    // 1. Samsung Orsay (2010–2014): Maple WebKit 537, SmartHub, curWidget/Common, or legacy SmartTV without Tizen/webOS.
+    var isSamsungOrsay = ua.indexOf('maple') !== -1 || appVer.indexOf('maple') !== -1 ||
+                         ua.indexOf('smarthub') !== -1 ||
+                         typeof window.curWidget !== 'undefined' || typeof window.Common !== 'undefined' ||
                          (ua.indexOf('smarttv') !== -1 && !isTizen && !isWebOs) ||
                          (ua.indexOf('samsung') !== -1 && !isTizen &&
                           (ua.indexOf('2011') !== -1 || ua.indexOf('2012') !== -1 || ua.indexOf('2013') !== -1 || ua.indexOf('2014') !== -1 || ua.indexOf('2015') !== -1));
 
-    // 2. LG NetCast and early LG webOS 1.x–4.x / early Samsung Tizen 2.x–4.x (pre-Chrome 64/87).
-    var isOldLG = ua.indexOf('netcast') !== -1 || /web0?s\/[1-4]\./.test(ua);
-    var isOldTizen = /tizen[\s/]+[1-4]\./.test(ua);
+    <div id="toast"></div>
 
-    // 3. Modern JS / CSS requirements for Vue 3 + /tv layout (Proxy, ES modules, CSS inset: 0).
-    var supportsModules = false;
-    var supportsProxy = typeof window.Proxy === 'function';
-    var supportsInset = false;
-    try {
-        supportsModules = 'noModule' in document.createElement('script');
-    } catch (e) {}
-    try {
-        supportsInset = !!(window.CSS && window.CSS.supports && window.CSS.supports('inset', '0px'));
-    } catch (e) {}
+    <script>
+        // ── Automatic Smart TV Routing: /tv (modern LG/Tizen/Android) vs /tv/lite (Orsay & older TVs) ──
+        var KINOSOTA_NEXTGEN_URL = "http://watch.scenrix.com/tv";
+        var KINOSOTA_LITE_URL = "http://watch.scenrix.com/tv/lite";
+        var KINOSOTA_APP_URL = KINOSOTA_NEXTGEN_URL;
+        var TV_MODE_KEY = 'kinosota:tv-engine';
+        var isNavigating = false;
 
-    var chromeMajor = chromeMajorVersion(ua);
-    if (chromeMajor && chromeMajor < 64) return 'legacy';
-    if (isTvUa && chromeMajor && chromeMajor < 87) return 'legacy';
-    if (isSamsungOrsay || isOldLG || isOldTizen || !supportsModules || !supportsProxy) return 'legacy';
-    if (isTvUa && !supportsInset) return 'legacy';
-    return 'modern';
-}
-
-function resolvePortalUrl() {
-    var override = tvSearchParam('engine');
-    try { window.localStorage.removeItem(TV_MODE_KEY); } catch (e) {}
-    if (override === 'legacy') return KINOSOTA_LITE_URL;
-    if (override === 'nextgen') return KINOSOTA_NEXTGEN_URL + '?engine=nextgen';
-    return detectTvEpoch() === 'legacy' ? KINOSOTA_LITE_URL : KINOSOTA_NEXTGEN_URL;
-}
-
-function renderTvRoute() {
-    KINOSOTA_APP_URL = resolvePortalUrl();
-    var card = document.getElementById('card-app');
-    if (card) card.setAttribute('href', KINOSOTA_APP_URL);
-}
-
-function showToast(msg) {
-    var t = document.getElementById('toast');
-    if (t) {
-        t.innerText = msg;
-        t.style.display = 'block';
-    }
-}
-
-function navigateToPortal(event) {
-    if (event && event.preventDefault) event.preventDefault();
-    if (isNavigating) return;
-    isNavigating = true;
-    KINOSOTA_APP_URL = resolvePortalUrl();
-
-    showToast('Запуск портала KINOSOTA...');
-
-    var card = document.getElementById('card-app');
-    if (card) {
-        var title = card.querySelector('.card-title');
-        if (title) title.innerText = 'ЗАГРУЗКА...';
-        card.classList.add('focused');
-        var img = card.querySelector('.card-image');
-        if (img) {
-            img.style.borderColor = '#00ff88';
-            img.style.boxShadow = '0 0 35px rgba(0, 255, 136, 0.9)';
+        function tvSearchParam(name) {
+            var m = (window.location.search || '').match(new RegExp('[?&]' + name + '=([^&]+)'));
+            return m && m[1] ? decodeURIComponent(m[1]) : '';
         }
-    }
 
-    try {
-        if (window.TVXInteractionPlugin && window.TVXInteractionPlugin.executeAction) {
-            window.TVXInteractionPlugin.executeAction('link:' + KINOSOTA_APP_URL);
-            return;
+        function chromeMajorVersion(ua) {
+            var m = ua.match(/(?:chrome|crios|chromium)\/(\d+)/);
+            return m && m[1] ? parseInt(m[1], 10) : 0;
         }
-    } catch(err) {}
 
-    try {
-        if (window.top && window.top !== window) {
-            window.top.location.href = KINOSOTA_APP_URL;
-            return;
+        /** Detect browser capability automatically without asking the user: 'legacy' or 'modern'. */
+        function detectTvEpoch() {
+            var ua = (navigator.userAgent || '').toLowerCase();
+            var isWebOs = ua.indexOf('webos') !== -1 || ua.indexOf('web0s') !== -1;
+            var isTizen = ua.indexOf('tizen') !== -1;
+            var isTvUa = isWebOs || isTizen || ua.indexOf('maple') !== -1 || ua.indexOf('netcast') !== -1 ||
+                ua.indexOf('smarttv') !== -1 || ua.indexOf('smart-tv') !== -1 || ua.indexOf('hbbtv') !== -1 ||
+                ua.indexOf('aft') !== -1 || ua.indexOf('bravia') !== -1 || ua.indexOf('philips') !== -1 ||
+                ua.indexOf('android tv') !== -1 || ua.indexOf('googletv') !== -1;
+
+            // 1. Samsung Orsay (2010–2014): Maple WebKit 537 or legacy SmartTV without Tizen/webOS.
+            var isSamsungOrsay = ua.indexOf('maple') !== -1 ||
+                (ua.indexOf('smarttv') !== -1 && !isTizen && !isWebOs) ||
+                (ua.indexOf('samsung') !== -1 && !isTizen &&
+                    (ua.indexOf('2011') !== -1 || ua.indexOf('2012') !== -1 || ua.indexOf('2013') !== -1 || ua.indexOf('2014') !== -1 || ua.indexOf('2015') !== -1));
+
+            // 2. LG NetCast and early LG webOS 1.x–4.x / early Samsung Tizen 2.x–4.x (pre-Chrome 64/87).
+            var isOldLG = ua.indexOf('netcast') !== -1 || /web0?s\/[1-4]\./.test(ua);
+            var isOldTizen = /tizen[\s/]+[1-4]\./.test(ua);
+
+            // 3. Modern JS / CSS requirements for Vue 3 + /tv layout (Proxy, ES modules, CSS inset: 0).
+            var supportsModules = false;
+            var supportsProxy = typeof window.Proxy === 'function';
+            var supportsInset = false;
+            try {
+                supportsModules = 'noModule' in document.createElement('script');
+            } catch (e) { }
+            try {
+                supportsInset = !!(window.CSS && window.CSS.supports && window.CSS.supports('inset', '0px'));
+            } catch (e) { }
+
+            var chromeMajor = chromeMajorVersion(ua);
+            if (chromeMajor && chromeMajor < 64) return 'legacy';
+            if (isTvUa && chromeMajor && chromeMajor < 87) return 'legacy';
+            if (isSamsungOrsay || isOldLG || isOldTizen || !supportsModules || !supportsProxy) return 'legacy';
+            if (isTvUa && !supportsInset) return 'legacy';
+            return 'modern';
         }
-    } catch(err) {}
 
-    try { window.location.assign(KINOSOTA_APP_URL); } catch(e) {}
-    try { window.location.href = KINOSOTA_APP_URL; } catch(e) {}
-}
-
-function installAndroidTV(event) {
-    if (event && event.preventDefault) {
-        event.preventDefault();
-    }
-    showToast('Приложение для Android TV скоро будет доступно');
-    setTimeout(function() {
-        var t = document.getElementById('toast');
-        if (t) t.style.display = 'none';
-    }, 2500);
-    return false;
-}
-
-function exitToRootApp(event) {
-    if (event && event.preventDefault) {
-        event.preventDefault();
-    }
-    try {
-        if (window.TVXInteractionPlugin && window.TVXInteractionPlugin.executeAction) {
-            window.TVXInteractionPlugin.executeAction('back');
-            return;
+        function resolvePortalUrl() {
+            var override = tvSearchParam('engine');
+            try { window.localStorage.removeItem(TV_MODE_KEY); } catch (e) { }
+            if (override === 'legacy') return KINOSOTA_LITE_URL;
+            if (override === 'nextgen') return KINOSOTA_NEXTGEN_URL + '?engine=nextgen';
+            return detectTvEpoch() === 'legacy' ? KINOSOTA_LITE_URL : KINOSOTA_NEXTGEN_URL;
         }
-    } catch (e) {}
 
-    if (window.history.length > 1) {
-        window.history.back();
-    } else {
-        window.location.href = "https://msx.benzac.de/";
-    }
-}
-
-// ── Smart TV Remote D-Pad & Key Detection ──
-var focusable = ['card-app', 'card-android', 'btn-back'];
-var currentIndex = 0;
-
-function updateFocus(index) {
-    if (index < 0) index = 0;
-    if (index >= focusable.length) index = focusable.length - 1;
-    currentIndex = index;
-    for (var i = 0; i < focusable.length; i++) {
-        var node = document.getElementById(focusable[i]);
-        if (node) {
-            if (i === currentIndex) {
-                node.classList.add('focused');
-                try { node.focus(); } catch(e) {}
-            } else {
-                node.classList.remove('focused');
+    // Stay inside the current MSX window/webview instead of overwriting window.top,
+    // so TV platform bridges (Orsay $MANAGER_WIDGET / Tizen $WEBAPIS) stay intact.
+        function showToast(msg) {
+            var t = document.getElementById('toast');
+            if (t) {
+                t.innerText = msg;
+                t.style.display = 'block';
             }
         }
-    }
-}
 
-function getCode(e) {
-    return e.keyCode || e.which || 0;
-}
+        function navigateToPortal(event) {
+            if (event && event.preventDefault) event.preventDefault();
+            if (isNavigating) return;
+            isNavigating = true;
+            KINOSOTA_APP_URL = resolvePortalUrl();
 
-function getKey(e) {
-    var k = e.key;
-    if (!k || k === 'Unidentified') return '';
-    return String(k).toLowerCase();
-}
+            showToast('Запуск портала KINOSOTA...');
 
-function isEnterKey(e) {
-    var c = getCode(e);
-    var k = getKey(e);
-    return c === 13 || c === 29443 || c === 195 || c === 23 || c === 66 || c === 32 || k === 'enter' || k === 'select' || k === 'accept';
-}
+            var card = document.getElementById('card-app');
+            if (card) {
+                var title = card.querySelector('.card-title');
+                if (title) title.innerText = 'ЗАГРУЗКА...';
+                card.classList.add('focused');
+                var img = card.querySelector('.card-image');
+                if (img) {
+                    img.style.borderColor = '#00ff88';
+                    img.style.boxShadow = '0 0 35px rgba(0, 255, 136, 0.9)';
+                }
+            }
 
-function isBackKey(e) {
-    var c = getCode(e);
-    var k = getKey(e);
-    return c === 27 || c === 8 || c === 10009 || c === 461 || c === 196 || c === 145 || c === 88 || c === 45 || c === 4 || k === 'escape' || k === 'backspace' || k === 'goback' || k === 'back';
-}
+            try {
+                if (window.TVXInteractionPlugin && window.TVXInteractionPlugin.executeAction) {
+                    window.TVXInteractionPlugin.executeAction('link:' + KINOSOTA_APP_URL);
+                    return;
+                }
+            } catch (err) { }
 
-function isLeftKey(e) {
-    var c = getCode(e);
-    var k = getKey(e);
-    return c === 37 || c === 214 || c === 205 || k === 'arrowleft' || k === 'left';
-}
+            try {
+                if (window.top && window.top !== window) {
+                    window.top.location.href = KINOSOTA_APP_URL;
+                    return;
+                }
+            } catch (err) { }
 
-function isRightKey(e) {
-    var c = getCode(e);
-    var k = getKey(e);
-    return c === 39 || c === 213 || c === 206 || c === 5 || k === 'arrowright' || k === 'right';
-}
-
-function isUpKey(e) {
-    var c = getCode(e);
-    var k = getKey(e);
-    return c === 38 || c === 211 || c === 203 || c === 29460 || k === 'arrowup' || k === 'up';
-}
-
-function isDownKey(e) {
-    var c = getCode(e);
-    var k = getKey(e);
-    return c === 40 || c === 212 || c === 204 || c === 29461 || k === 'arrowdown' || k === 'down';
-}
-
-function handleTVKey(e) {
-    if (isLeftKey(e)) {
-        if (currentIndex === 1) updateFocus(0);
-        if (e.preventDefault) e.preventDefault();
-    } else if (isRightKey(e)) {
-        if (currentIndex === 0) updateFocus(1);
-        if (e.preventDefault) e.preventDefault();
-    } else if (isUpKey(e)) {
-        updateFocus(2);
-        if (e.preventDefault) e.preventDefault();
-    } else if (isDownKey(e)) {
-        if (currentIndex === 2) updateFocus(0);
-        if (e.preventDefault) e.preventDefault();
-    } else if (isEnterKey(e)) {
-        if (currentIndex === 0) {
-            navigateToPortal(e);
-        } else if (currentIndex === 1) {
-            installAndroidTV(e);
-            if (e.preventDefault) e.preventDefault();
-        } else if (currentIndex === 2) {
-            exitToRootApp(e);
-            if (e.preventDefault) e.preventDefault();
+            try { window.location.assign(KINOSOTA_APP_URL); } catch (e) { }
+            try { window.location.href = KINOSOTA_APP_URL; } catch (e) { }
         }
-    } else if (isBackKey(e)) {
-        exitToRootApp(e);
-        if (e.preventDefault) e.preventDefault();
-    }
-}
 
-document.addEventListener('keydown', handleTVKey);
-
-// Samsung Tizen TV remote key registration
-try {
-    if (window.tizen && window.tizen.tvinputdevice) {
-        window.tizen.tvinputdevice.registerKey("Return");
-        window.tizen.tvinputdevice.registerKey("Exit");
-    }
-} catch (e) {}
-
-window.addEventListener('load', function() {
-    renderTvRoute();
-    setTimeout(function() {
-        updateFocus(0);
-    }, 80);
-});
-
-window.addEventListener('pageshow', function() {
-    isNavigating = false;
-    renderTvRoute();
-    var t = document.getElementById('toast');
-    if (t) t.style.display = 'none';
-    var card = document.getElementById('card-app');
-    if (card) {
-        var title = card.querySelector('.card-title');
-        if (title) title.innerText = 'ВОЙТИ В KINOSOTA';
-        var img = card.querySelector('.card-image');
-        if (img) {
-            img.style.borderColor = '';
-            img.style.boxShadow = '';
+        function installAndroidTV(event) {
+            if (event && event.preventDefault) {
+                event.preventDefault();
+            }
+            showToast('Приложение для Android TV скоро будет доступно');
+            setTimeout(function () {
+                var t = document.getElementById('toast');
+                if (t) t.style.display = 'none';
+            }, 2500);
+            return false;
         }
-    }
-    updateFocus(0);
-});
-</script>
+
+        function exitToRootApp(event) {
+            if (event && event.preventDefault) {
+                event.preventDefault();
+            }
+            try {
+                if (window.TVXInteractionPlugin && window.TVXInteractionPlugin.executeAction) {
+                    window.TVXInteractionPlugin.executeAction('back');
+                    return;
+                }
+            } catch (e) { }
+
+            if (window.history.length > 1) {
+                window.history.back();
+            } else {
+                window.location.href = "https://msx.benzac.de/";
+            }
+        }
+
+        // ── Smart TV Remote D-Pad & Key Detection ──
+        var focusable = ['card-app', 'card-android', 'btn-back'];
+        var currentIndex = 0;
+
+        function updateFocus(index) {
+            if (index < 0) index = 0;
+            if (index >= focusable.length) index = focusable.length - 1;
+            currentIndex = index;
+            for (var i = 0; i < focusable.length; i++) {
+                var node = document.getElementById(focusable[i]);
+                if (node) {
+                    if (i === currentIndex) {
+                        node.classList.add('focused');
+                        try { node.focus(); } catch (e) { }
+                    } else {
+                        node.classList.remove('focused');
+                    }
+                }
+            }
+        }
+
+        function getCode(e) {
+            return e.keyCode || e.which || 0;
+        }
+
+        function getKey(e) {
+            var k = e.key;
+            if (!k || k === 'Unidentified') return '';
+            return String(k).toLowerCase();
+        }
+
+        function isEnterKey(e) {
+            var c = getCode(e);
+            var k = getKey(e);
+            return c === 13 || c === 29443 || c === 195 || c === 23 || c === 66 || c === 32 || k === 'enter' || k === 'select' || k === 'accept';
+        }
+
+        function isBackKey(e) {
+            var c = getCode(e);
+            var k = getKey(e);
+            return c === 27 || c === 8 || c === 10009 || c === 461 || c === 196 || c === 145 || c === 88 || c === 45 || c === 4 || k === 'escape' || k === 'backspace' || k === 'goback' || k === 'back';
+        }
+
+        function isLeftKey(e) {
+            var c = getCode(e);
+            var k = getKey(e);
+            return c === 37 || c === 214 || c === 205 || k === 'arrowleft' || k === 'left';
+        }
+
+        function isRightKey(e) {
+            var c = getCode(e);
+            var k = getKey(e);
+            return c === 39 || c === 213 || c === 206 || c === 5 || k === 'arrowright' || k === 'right';
+        }
+
+        function isUpKey(e) {
+            var c = getCode(e);
+            var k = getKey(e);
+            return c === 38 || c === 211 || c === 203 || c === 29460 || k === 'arrowup' || k === 'up';
+        }
+
+        function isDownKey(e) {
+            var c = getCode(e);
+            var k = getKey(e);
+            return c === 40 || c === 212 || c === 204 || c === 29461 || k === 'arrowdown' || k === 'down';
+        }
+
+        function handleTVKey(e) {
+            if (isLeftKey(e)) {
+                if (currentIndex === 1) updateFocus(0);
+                if (e.preventDefault) e.preventDefault();
+            } else if (isRightKey(e)) {
+                if (currentIndex === 0) updateFocus(1);
+                if (e.preventDefault) e.preventDefault();
+            } else if (isUpKey(e)) {
+                updateFocus(2);
+                if (e.preventDefault) e.preventDefault();
+            } else if (isDownKey(e)) {
+                if (currentIndex === 2) updateFocus(0);
+                if (e.preventDefault) e.preventDefault();
+            } else if (isEnterKey(e)) {
+                if (currentIndex === 0) {
+                    navigateToPortal(e);
+                } else if (currentIndex === 1) {
+                    installAndroidTV(e);
+                    if (e.preventDefault) e.preventDefault();
+                } else if (currentIndex === 2) {
+                    exitToRootApp(e);
+                    if (e.preventDefault) e.preventDefault();
+                }
+            } else if (isBackKey(e)) {
+                exitToRootApp(e);
+                if (e.preventDefault) e.preventDefault();
+            }
+        }
+
+        document.addEventListener('keydown', handleTVKey);
+
+        // Samsung Tizen TV remote key registration
+        try {
+            if (window.tizen && window.tizen.tvinputdevice) {
+                window.tizen.tvinputdevice.registerKey("Return");
+                window.tizen.tvinputdevice.registerKey("Exit");
+            }
+        } catch (e) { }
+
+        window.addEventListener('load', function () {
+            renderTvRoute();
+            setTimeout(function () {
+                updateFocus(0);
+            }, 80);
+        });
+
+        window.addEventListener('pageshow', function () {
+            isNavigating = false;
+            renderTvRoute();
+            var t = document.getElementById('toast');
+            if (t) t.style.display = 'none';
+            var card = document.getElementById('card-app');
+            if (card) {
+                var title = card.querySelector('.card-title');
+                if (title) title.innerText = 'ВОЙТИ В KINOSOTA';
+                var img = card.querySelector('.card-image');
+                if (img) {
+                    img.style.borderColor = '';
+                    img.style.boxShadow = '';
+                }
+            }
+            updateFocus(0);
+        });
+    </script>
 
 </body>
+
 </html>
